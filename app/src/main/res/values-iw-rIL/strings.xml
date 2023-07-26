@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">GG Notes</string>
+    <string name="email">אימייל</string>
+    <string name="hello">שלום.</string>
+    <string name="password">סיסמה</string>
+    <string name="login">התחברות</string>
+    <string name="already_have_an_account">חשבון קיים?</string>
+    <string name="create_account">יצירת  חשבון</string>
+    <string name="confirm_password">אימות סיסמה</string>
+    <string name="let_s_get_started">בואו נתחיל!</string>
+    <string name="welcome_back">נא להתחבר לחשבון שלך.</string>
+    <string name="don_t_have_an_account">אין לך חשבון?</string>
+    <string name="add_new_note">הוספת פתק חדש</string>
+    <string name="content">תוכן</string>
+    <string name="title">כותרת</string>
+    <string name="delete_note">מחיקת פתק</string>
+    <string name="create_account_btn_text">יצירת חשבון</string>
+    <string name="account_create_success_verify">חשבון נוצר בהצלחה. נשלח מייל לאימות</string>
+    <string name="invalid_email">אימייל לא תקין</string>
+    <string name="password_error_length">סיסמה חייבת להכיל 6 תווים לפחות</string>
+    <string name="password_error_match">סיסמאות לא תואמות</string>
+    <string name="email_verification_error">אימייל לא מאומת. יש לאמת את האימייל</string>
+    <string name="logout">התנתקות</string>
+    <string name="edit_note">עריכת פתק</string>
+    <string name="note_delete_success">פתק נמחק בהצלחה</string>
+    <string name="note_delete_fail">שגיאה בעת מחיקת פתק</string>
+    <string name="title_require">יש לתת כותרת</string>
+    <string name="note_add_success">פתק נוסף בהצלחה</string>
+    <string name="note_add_fail">שגיאה בעת הוספת פתק</string>
+    <string name="notes">פתקים</string>
+</resources>

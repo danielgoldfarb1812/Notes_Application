@@ -1,0 +1,32 @@
+<resources>
+    <string name="app_name">GG Notes</string>
+    <string name="email">Email</string>
+    <string name="hello">Hello.</string>
+    <string name="password">Password</string>
+    <string name="login">Login</string>
+    <string name="already_have_an_account">Already have an account? </string>
+    <string name="create_account">Create account</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="let_s_get_started">Let\'s get started!</string>
+    <string name="welcome_back">Please log in to your account</string>
+    <string name="don_t_have_an_account">Don\'t have an account?</string>
+    <string name="add_new_note">Add new note</string>
+    <string name="content">Content</string>
+    <string name="title">Title</string>
+    <string name="delete_note">Delete note</string>
+    <string name="create_account_btn_text">Create account</string>
+    <string name="account_create_success_verify">Successfully created account, check email to verify</string>
+    <string name="invalid_email">Email is invalid</string>
+    <string name="password_error_length">Password must be 6 characters or more</string>
+    <string name="password_error_match">Passwords don\'t match</string>
+    <string name="email_verification_error">Email not verified. Please verify your email.</string>
+    <string name="logout">Logout</string>
+    <string name="edit_note">Edit your note</string>
+    <string name="note_delete_success">Note deleted successfully.</string>
+    <string name="note_delete_fail">Failed deleting note.</string>
+    <string name="note_add_success">Note added successfully.</string>
+    <string name="note_add_fail">Failed adding note.</string>
+    <string name="title_require">Title required.</string>
+    <string name="notes">Notes</string>
+
+</resources>
