@@ -16,11 +16,16 @@ import com.google.firebase.firestore.DocumentReference;
 
 public class NoteDetailsActivity extends AppCompatActivity {
 
+    // משתני עזר לפתיחת הפעילות
     EditText titleEditText, contentEditText;
     ImageButton saveNoteBtn;
     TextView pageTitleTextView, deleteNoteTextViewBtn;
+
+    // משתנים לאחסון פרטי הפתק
     String title, content, docId;
     boolean isEditMode = false;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,7 +33,7 @@ public class NoteDetailsActivity extends AppCompatActivity {
         initViews();
         initButtons();
 
-        // receive data
+        // קבלת הנתונים שנשלחו מהפעילות הקודמת
         title = getIntent().getStringExtra("title");
         content = getIntent().getStringExtra("content");
         docId = getIntent().getStringExtra("docId");
@@ -40,6 +45,7 @@ public class NoteDetailsActivity extends AppCompatActivity {
             isEditMode = true;
         }
 
+        // הצגת פרטי הפתק בפורמט עריכה או הוספה
         titleEditText.setText(title);
         contentEditText.setText(content);
         if (isEditMode){
@@ -54,6 +60,7 @@ public class NoteDetailsActivity extends AppCompatActivity {
         deleteNoteTextViewBtn.setOnClickListener((v) -> deleteNoteFromFirebase());
     }
 
+    // פעולה למחיקת הפתק מהפיירבייס
     private void deleteNoteFromFirebase() {
         DocumentReference documentReference;
         documentReference = Utility.getCollectionReferenceForNotes().document(docId);
@@ -61,7 +68,7 @@ public class NoteDetailsActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()){
-                    // note is deleted
+                    // הפתק נמחק בהצלחה
                     Utility.showToast(NoteDetailsActivity.this, getResources().getString(R.string.note_delete_success));
                     finish();
                 }
@@ -73,6 +80,7 @@ public class NoteDetailsActivity extends AppCompatActivity {
         });
     }
 
+    // פעולה לשמירת הפתק
     void saveNote() {
         String noteTitle = titleEditText.getText().toString();
         String noteContent = contentEditText.getText().toString();
@@ -89,6 +97,7 @@ public class NoteDetailsActivity extends AppCompatActivity {
         saveNoteToFirebase(note);
     }
 
+    // פעולה לשמירת הפתק לפיירבייס
      void saveNoteToFirebase(Note note) {
          DocumentReference documentReference;
          if (isEditMode){
@@ -101,12 +110,12 @@ public class NoteDetailsActivity extends AppCompatActivity {
              @Override
              public void onComplete(@NonNull Task<Void> task) {
                  if (task.isSuccessful()){
-                     // note is added
+                     // הפתק נוסף בהצלחה
                      Utility.showToast(NoteDetailsActivity.this, getResources().getString(R.string.note_add_success));
                      finish();
                  }
                  else{
-                     // note is not added
+                     // נכשלה פעולת ההוספה
                      Utility.showToast(NoteDetailsActivity.this, getResources().getString(R.string.note_add_fail));
                  }
              }

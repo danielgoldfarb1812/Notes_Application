@@ -20,6 +20,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.Objects;
 
+// פעילות של יצירת חשבון למשתמש חדש
 public class CreateAccountActivity extends AppCompat {
 
     EditText emailEditTxt, passwordEditTxt, confirmPasswordEditTxt;
@@ -36,20 +37,23 @@ public class CreateAccountActivity extends AppCompat {
         initButtons();
     }
 
+    // יצירת חשבון עבור המשתמש החדש
     void createAccount() {
         String email = emailEditTxt.getText().toString();
         String password = passwordEditTxt.getText().toString();
         String confirmPassword = confirmPasswordEditTxt.getText().toString();
 
+        // ביצוע אימות תקינות הנתונים המוזנים על ידי המשתמש
         boolean isValidated = validateData(email, password, confirmPassword);
         if (!isValidated){
             return;
         }
 
+        // יצירת החשבון ב-Firebase
         createAccountInFirebase(email, password);
-
     }
 
+    // יצירת החשבון ב-Firebase
     void createAccountInFirebase(String email, String password) {
         changeInProgress(true);
 
@@ -58,7 +62,7 @@ public class CreateAccountActivity extends AppCompat {
                 task -> {
                     changeInProgress(false);
                     if (task.isSuccessful()){
-                        // account created successfully
+                        // יצירת החשבון בהצלחה
                         Utility.showToast(CreateAccountActivity.this, getResources().getString(R.string.account_create_success_verify));
                         Objects.requireNonNull(firebaseAuth.getCurrentUser()).sendEmailVerification();
                         firebaseAuth.signOut();
@@ -66,12 +70,13 @@ public class CreateAccountActivity extends AppCompat {
                         finish();
                     }
                     else{
-                        // account creation failed
+                        // נכשלה יצירת החשבון
                         Utility.showToast(CreateAccountActivity.this, Objects.requireNonNull(task.getException()).getLocalizedMessage());
                     }
                 });
     }
 
+    // הצגת פקד זימון של טעינה
     void changeInProgress(boolean inProgress){
         if (inProgress){
             progressBar.setVisibility(View.VISIBLE);
@@ -83,17 +88,19 @@ public class CreateAccountActivity extends AppCompat {
         }
     }
 
+    // ביצוע אימות תקינות הנתונים המוזנים על ידי המשתמש
     boolean validateData(String email, String password, String confirmPassword){
-        // validate data inputs from the user
-
+        // בדיקת תקינות האימייל
         if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
             emailEditTxt.setError(getResources().getString(R.string.invalid_email));
             return false;
         }
+        // בדיקת תקינות אורך הסיסמה
         if (password.length() < 6){
             passwordEditTxt.setError(getResources().getString(R.string.password_error_length));
             return false;
         }
+        // בדיקת התאמה בין הסיסמאות
         if (!password.equals(confirmPassword)){
             confirmPasswordEditTxt.setError(getResources().getString(R.string.password_error_match));
             return false;

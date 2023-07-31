@@ -16,20 +16,27 @@ public class SplashActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // דרך זו נכין את האפליקציה להיות במצב יומי בלבד, גם אם התוכנית המכשיר מוגדרת למצב ערב
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         setContentView(R.layout.activity_splash);
 
         //אובייקט המטפל במעבר המסך, מקבל פרמטר של זמן דיליי המוגדר למעלה
         int DELAY_TIME = 2000;
         new Handler().postDelayed(() -> {
+            // בדיקה אם יש משתמש מחובר כרגע באפליקציה
             FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
 
+            // בהתאם למצב המשתמש נעביר למסך המתאים
             if (currentUser == null){
+                // אם אין משתמש מחובר - מעבר למסך ההתחברות (LoginActivity)
                 startActivity(new Intent(SplashActivity.this, LoginActivity.class));
             }
             else{
+                // אם קיים משתמש מחובר - מעבר למסך הראשי (MainActivity)
                 startActivity(new Intent(SplashActivity.this, MainActivity.class));
             }
+            // סיום המעבר באמצעות finish(), נועד כדי למנוע חזרה למסך זה בלחיצה על כפתור החזרה
             finish();
         }, DELAY_TIME);
     }

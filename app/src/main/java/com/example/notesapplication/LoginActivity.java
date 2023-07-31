@@ -20,6 +20,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import java.util.Objects;
 
 public class LoginActivity extends AppCompat {
+    // תיבות הטקסט וכפתורים בפעילות
     EditText emailEditTxt, passwordEditTxt;
     Button loginBtn;
     ProgressBar progressBar;
@@ -34,30 +35,40 @@ public class LoginActivity extends AppCompat {
     }
 
     private void initButtons() {
+        // הגדרת הפעולות של הכפתורים בפעילות
         loginBtn.setOnClickListener(v -> loginUser());
         createAccountBtnTextView.setOnClickListener(v -> {
+            // עברת לפעילות יצירת חשבון חדש
             startActivity(new Intent(LoginActivity.this, CreateAccountActivity.class));
             finish();
         });
         languageBtn.setOnClickListener(v -> {
+            // תפתח תפריט הנפתח עבור בחירת שפה
             showLanguageMenu();
         });
     }
 
     private void showLanguageMenu() {
+        // תפריט הנפתח עבור בחירת שפה
         PopupMenu popupMenu = new PopupMenu(LoginActivity.this, languageBtn);
+
+        // הוספת פריטי השפות לתפריט
         popupMenu.getMenu().add("HE");
         popupMenu.getMenu().add("EN");
         popupMenu.show();
+
+        // הגדרת תגובה עם השפה הנבחרת
         popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 String langChoice = item.getTitle().toString();
                 switch (langChoice){
                     case "HE":
+                        // שינוי לשפה עברית
                         changeToHebrew();
                         break;
                     case "EN":
+                        // שינוי לשפה אנגלית
                         changeToEnglish();
                         break;
                 }
@@ -67,47 +78,55 @@ public class LoginActivity extends AppCompat {
     }
 
     private void changeToEnglish() {
+        // שינוי השפה לאנגלית והרענון של הפעילות
         LanguageManager languageManager = new LanguageManager(this);
         languageManager.updateResource("en");
         recreate();
     }
 
     private void changeToHebrew() {
+        // שינוי השפה לעברית והרענון של הפעילות
         LanguageManager languageManager = new LanguageManager(this);
         languageManager.updateResource("iw");
         recreate();
     }
 
     void loginUser(){
+        // קבלת הקלט מתיבת הטקסט לאימייל ולסיסמה
         String email = emailEditTxt.getText().toString();
         String password = passwordEditTxt.getText().toString();
 
+        // אימות תקינות הקלט
         boolean isValidated = validateData(email, password);
         if (!isValidated){
             return;
         }
 
+        // התחברות עם האימייל והסיסמה לפיירבייס
         loginWithFirebase(email, password);
     }
 
     private void loginWithFirebase(String email, String password) {
+        // התחברות לפיירבייס באמצעות אימייל וסיסמה
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
         changeInProgress(true);
         firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
+            // בסיום התהליך, שינוי התצוגה בהתאם לתוצאה
             changeInProgress(false);
             if (task.isSuccessful()){
-                // login is success
+                // התחברות הצליחה
                 if (Objects.requireNonNull(firebaseAuth.getCurrentUser()).isEmailVerified()){
-                    // go to mainactivity
+                    // האימייל מאומת - עבור למסך הראשי
                     startActivity(new Intent(LoginActivity.this, MainActivity.class));
                     finish();
                 }
                 else{
+                    // האימייל אינו מאומת - הודעה למשתמש
                     Utility.showToast(LoginActivity.this, getResources().getString(R.string.email_verification_error));
                 }
             }
             else{
-                // login failed
+                // התחברות נכשלה - הודעת שגיאה למשתמש
                 Utility.showToast(LoginActivity.this, Objects.requireNonNull(task.getException()).getLocalizedMessage());
             }
         });
@@ -115,6 +134,7 @@ public class LoginActivity extends AppCompat {
     }
 
     void changeInProgress(boolean inProgress){
+        // פונקציה לשינוי תצוגת הפעילות כאשר התהליך בתהליך בפעולת הכניסה מתבצע
         if (inProgress){
             progressBar.setVisibility(View.VISIBLE);
             loginBtn.setVisibility(View.GONE);
@@ -126,7 +146,7 @@ public class LoginActivity extends AppCompat {
     }
 
     boolean validateData(String email, String password){
-        // validate data inputs from the user
+        // אימות הקלט שהוזן על ידי המשתמש
 
         if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
             emailEditTxt.setError(getResources().getString(R.string.invalid_email));
@@ -140,6 +160,7 @@ public class LoginActivity extends AppCompat {
     }
 
     private void initViews() {
+        // חיבור המשתנים בקוד לפריטים ב-layout של הפעילות
         emailEditTxt = findViewById(R.id.email_edit_text);
         passwordEditTxt = findViewById(R.id.password_edit_text);
         loginBtn = findViewById(R.id.login_btn);
